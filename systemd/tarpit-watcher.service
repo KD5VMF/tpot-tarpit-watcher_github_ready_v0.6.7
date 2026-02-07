@@ -1,0 +1,19 @@
+[Unit]
+Description=TPOT TarPit Watcher (conntrack dashboard)
+After=network-online.target docker.service
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=%i
+Environment=TERM=xterm-256color
+Environment=TPOT_DIR=%h/tpotce
+ExecStart=/usr/bin/sudo -E /usr/bin/python3 %h/tpotce/tarpit_watch.py
+Restart=always
+RestartSec=2
+
+# Allow sudo without password for python3 tarpit_watch.py if you enable this service.
+# Safer approach: run manually with ~/Tar-Start.sh.
+
+[Install]
+WantedBy=multi-user.target
